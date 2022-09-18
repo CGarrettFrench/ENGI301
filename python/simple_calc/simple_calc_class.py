@@ -44,6 +44,10 @@ Operations:
   - subtraction
   - multiplication
   - division
+  - right shift
+  - left shift
+  - modulo
+  - exponentiation
 
 Error conditions:
   - Invalid operator --> Program should exit
@@ -73,7 +77,11 @@ operators = {
     "+" : operator.add,
     "-" : operator.sub,
     "*" : operator.mul,
-    "/" : operator.truediv
+    "/" : operator.truediv,
+    ">>" : operator.rshift,
+    "<<" : operator.lshift,
+    "%" : operator.mod,
+    "**" : operator.pow
 }
 
 # ------------------------------------------------------------------------
@@ -96,7 +104,7 @@ def get_user_input():
     try:
         number1 = float(input("Enter first number : "))
         number2 = float(input("Enter second number: "))
-        op      = input("Enter function (valid values are +, -, *, /): ")
+        op      = input("Enter function (valid values are +, -, *, /, >>, <<, %, **): ")
     
         func    = operators.get(op)
     except:
@@ -121,6 +129,13 @@ def get_user_input():
 # NOTE - the the "__name__" will be the module name, i.e. the string "simple_calc"
 
 if __name__ == "__main__":
+    
+    try:
+        input = raw_input
+    except NameError:
+        pass
+    
+    
     # NOTE - Need to add main calculator functionality:
     # NOTE -   - Use a loop construct to repeat the operation
     # NOTE -   - Get the input from the user (i.e. use function created above)    
@@ -134,5 +149,9 @@ if __name__ == "__main__":
             print("Invalid input")
             break
         
-        print(func(num1, num2))
-
+        if (func == operator.lshift) or (func == operator.rshift):
+            binarynum1 = int(num1)
+            binarynum2 = int(num2)
+            print(func(binarynum1, binarynum2))
+        else:
+            print(func(num1, num2))
